@@ -5,18 +5,19 @@ import plotly.express as px
 # 1. 데이터 로드 및 캐싱 (Streamlit Cloud 환경 최적화)
 # @st.cache_data를 사용하여 파일 로딩 속도를 최적화합니다.
 @st.cache_data
+
 def load_data(file_path):
     """
     'm.csv' 파일을 로드하고 초기 데이터 처리를 수행합니다.
     """
     try:
-        # 파일이 같은 디렉토리에 있다고 가정하고 로드합니다.
-        df = pd.read_csv(file_path)
-        # 필요한 경우 컬럼명 정리 및 데이터 타입 변환을 여기에 추가할 수 있습니다.
+        # 파일 인코딩을 'cp949'로 지정하여 UnicodeDecodeError를 해결합니다.
+        df = pd.read_csv(file_path, encoding='cp949') 
         return df
     except FileNotFoundError:
         st.error("⚠️ 'm.csv' 파일을 찾을 수 없습니다. 파일을 앱 디렉토리에 넣어주세요.")
         return pd.DataFrame()
+# ... (나머지 코드는 그대로 유지)
 
 # ==============================================================================
 # 메인 Streamlit 애플리케이션 시작
